@@ -1,7 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
+import CartasPokemon from "../CartasPokemon/CartasPokemon";
+import GlobalContext from "../Global/GlobalContext";
+import { useHistory } from "react-router-dom";
 
-const Div = styled.div`
+
+const Header = styled.header`
  background-color: black;
  color: white;
  height: 8vh;
@@ -13,7 +17,7 @@ const Div = styled.div`
  
  `
 
- const Button = styled.button`
+const Button = styled.button`
   position: absolute ;
   right: 10px;
   margin: 10px;
@@ -23,13 +27,31 @@ const Div = styled.div`
   
  
  `
+const PokeLista = styled.main`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  width: 100vw;
+  height: 92vh;
+`
 
-const HomePage = () => {
+
+const ListaPokemon = () => {
+
+    const {pokemons} = useContext(GlobalContext);
+    const history = useHistory();
     return (
-        <Div>
+    <div>
+        <Header>
             <h1><i>HomePage</i></h1>
             < Button><i>Lista de Pokedex</i></Button>
-        </Div>
+        </Header>
+        <PokeLista>
+            {pokemons && pokemons.map((poke)=> {
+                return <CartasPokemon hey={poke.name} poke={poke} />
+            })}
+        </PokeLista>
+    </div>
     )
 }
-export default HomePage;
+export default ListaPokemon;
