@@ -3,6 +3,8 @@ import { useHistory } from "react-router-dom";
 import GlobalContext from "../Global/GlobalContext";
 import CartasPokemon from "../CartasPokemon/CartasPokemon";
 import styled from "styled-components";
+import Header from "../Header/Header";
+import {irParaListaDePokemons} from "../Router/Coordenador";
 
 
 const Main = styled.main`
@@ -19,13 +21,16 @@ const TelaPokemon = () => {
     const history = useHistory();
 
     return (
-        <div>
+        <>
+            < Header title={"Pokédex"}
+             leftButtonFunction={() => irParaListaDePokemons(history)}
+            />
             <Main>
                 {pokedex && pokedex.map((poke) => {
                     return < CartasPokemon isPokedex key={poke.name} poke={poke} />
                 })}
             </Main>
-        </div>
+        </>
     )
 }
 export default TelaPokemon;

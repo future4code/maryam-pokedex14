@@ -1,5 +1,5 @@
 import React, {useContext} from "react";
-import { detalhePokemon } from "../Router/Routes";
+import { detalhePokemon } from "../Router/Coordenador";
 import { useHistory } from "react-router-dom";
 import GlobalContext from "../Global/GlobalContext";
 import styled from "styled-components";
