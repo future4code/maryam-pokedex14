@@ -27,7 +27,7 @@ const TelaPokemon = () => {
             />
             <Main>
                 {pokedex && pokedex.map((poke) => {
-                    return < CartasPokemon isPokedex key={poke.name} poke={poke} />
+                    return < CartasPokemon key={poke.name} isPokedex pokemon={poke} />
                 })}
             </Main>
         </>

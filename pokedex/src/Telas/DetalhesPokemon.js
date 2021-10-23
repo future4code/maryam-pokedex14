@@ -2,7 +2,9 @@ import React, { useState, useContext, useEffect  } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import GlobalContexte from "../Global/GlobalContext"
 import axios from "axios";
+import Header from "../Header/Header"
 import styled from "styled-components";
+import { paraPokedex } from "../Router/Coordenador";
 
 const PokeInformacoes = styled.main`
     display: flex;
@@ -63,47 +65,45 @@ const DetalhesPokemon = () => {
     const [selecionarPokemon, setSelecionarPokemon] = useState({})
     const {pokemons, pokedex} = useContext(GlobalContexte)
     const history = useHistory()
+    const URL = "https://pokeapi.co/api/v2"
 
-    useEffect (() => {
+
+    useEffect(() => {
         let atual = [];
-        if(telaPokedex) {
-            atual = pokedex.find((item) => {
-                return item.name === name;
-            })
+        if (telaPokedex) {
+          atual = pokedex.find((item) => {
+            return item.name === name;
+          });
         } else {
-            atual = pokemons.find((item) => {
-                return item.name === name;
-            })
-
+          atual = pokemons.find((item) => {
+            return item.name === name;
+          });
         }
-
-        if (!atual){
-
-            const URL = "https://pokeapi.co/api/v2"
-
-            axios.get(`${URL}/pokemon/${name}`)
-            .then((response) =>{
-              setSelecionarPokemon(response.data)
-            })
-            .catch((error) => {
-                console.log(error.response.message)
-            })
+    
+        if (!atual) {
+          axios
+            .get(`${URL}/pokemon/${name}`)
+            .then((res) => setSelecionarPokemon(res.data))
+            .catch((err) => console.log(err.response.message));
         } else {
-            setSelecionarPokemon(atual)
+            setSelecionarPokemon(atual);
         }
-    }, [])
+      }, []);
 
     return (
         <div>
-           {setSelecionarPokemon && selecionarPokemon.sprites && (
+                < Header 
+                leftButtonFunction={() => history.goBack()}
+                showRightButton
+                />
                <PokeInformacoes>
                    <Imagens>
-                       <Img src={selecionarPokemon.sprites.front_default} />
-                       <Img src={selecionarPokemon.sprites.back_default} /> 
-                   </Imagens>
+                       <Img src={selecionarPokemon && selecionarPokemon.sprites && selecionarPokemon.sprites.front_default} />
+                       <Img src={selecionarPokemon && selecionarPokemon.sprites && selecionarPokemon.sprites.back_default} /> 
+                   </Imagens> 
                    <Etats>
                        <Titulo>Poderes</Titulo>
-                       {selecionarPokemon && selecionarPokemon.stats.map((stat) => {
+                       {selecionarPokemon && selecionarPokemon.stats && selecionarPokemon.stats.map((stat) => {
                            return (
                                <p key={stat.stat.name}>
                                    <strong>{stat.stat.name}:</strong>
@@ -114,13 +114,13 @@ const DetalhesPokemon = () => {
                    </Etats>
                    <DigiMovin>
                        <Tipo>
-                           {selecionarPokemon && selecionarPokemon.type.map((type) => {
+                           {selecionarPokemon && selecionarPokemon.type && selecionarPokemon.type.map((type) => {
                                return <p key={type.type.name}>{type.type.name}</p>
                            })}
                        </Tipo>
                        <Moves>
                            <Titulo> Principais ataques</Titulo>
-                           {selecionarPokemon && selecionarPokemon.moves.map((move, index) => {
+                           {selecionarPokemon && selecionarPokemon.moves && selecionarPokemon.moves.map((move, index) => {
                               return (
                                 index < 5 && <p key={move.move.name}>{move.move.name}</p>
                               )
@@ -128,7 +128,6 @@ const DetalhesPokemon = () => {
                        </Moves>
                    </DigiMovin>
                </PokeInformacoes>
-           )}
         </div>
     )
 }

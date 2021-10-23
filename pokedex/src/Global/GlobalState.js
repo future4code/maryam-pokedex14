@@ -8,11 +8,9 @@ const GlobalState = (props) => {
     const [pokedex, setPokedex] = useState([]);
     const [pokemons, setPokemons] = useState([]);
     const [pokemonNames, setPokemonNames] = useState([]);
-
+    const URL = "https://pokeapi.co/api/v2"
 
     useEffect(() => {
-
-        const URL = "https://pokeapi.co/api/v2"
 
         const novaLista = [];
         pokemonNames.forEach((item) => {
@@ -21,11 +19,11 @@ const GlobalState = (props) => {
             .then((res) => {
                 novaLista.push(res.data);
                 if(novaLista.length === 20){
-                    const listaOrdenada = novaLista.sort((a,b) =>{
-                        return a.id - b.id;
-                    });
-                    setPokemons(listaOrdenada);
-                }
+                  const ordenarList = novaLista.sort((a, b) =>{
+                      return a.id - b.id
+                  })
+                    setPokemons(ordenarList)
+                };
             })
             .catch((err) => {
                 console.log(err.message)
@@ -33,18 +31,13 @@ const GlobalState = (props) => {
         })
     },[pokemonNames])
 
-    
-     useEffect(() => {
-         getPokemonNames();
-     }, [])
-
      const dados = {
          pokemons,setPokemons,pokedex,setPokedex
      };
 
      const getPokemonNames = () => {
          axios
-         .get(`${URL}/pokemon?limit=20`)
+         .get(`${URL}/pokemon`)
          .then((res) => {
             setPokemonNames(res.data.results)
          })
@@ -53,10 +46,15 @@ const GlobalState = (props) => {
          })
      }
 
+     useEffect(() => {
+        getPokemonNames();
+    }, [])
+
     return(
         <GlobalContext.Provider value={dados}>
             {props.children} 
         </GlobalContext.Provider>
     )
 }
+
 export default GlobalState;

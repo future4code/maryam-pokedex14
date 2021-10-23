@@ -11,9 +11,9 @@ const Routes = () => {
     return (
         <BrowserRouter>
               <Switch>
-                  <Route path="/"  component={ListaPokemon}/>
-                  <Route path="/pokemon/:id/:telaPokedex"  component={DetalhesPokemon}/>
-                  <Route path="/pokedex"  component={TelaPokemon}/>
+                  <Route exact path="/"  component={ListaPokemon}/>
+                  <Route exact path="/pokemon/:name"  component={DetalhesPokemon}/>
+                  <Route exact path="/pokedex"  component={TelaPokemon}/>
                   <Route>
                       <div>Página não encontrada</div>
                   </Route>

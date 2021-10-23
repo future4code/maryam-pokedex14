@@ -26,23 +26,20 @@ grid-template-columns: 1fr 1fr;
 `
 
 
-const CartasPokemon = (props) => {
+const CartasPokemon = ({pokemon, isPokedex}) => {
     const history = useHistory();
     const {pokemons, setPokemons, pokedex, setPokedex} = useContext(GlobalContext)
 
     const adicionarPokedex = () => {
         const indice = pokemons.findIndex(
-            (item) => item.name === props.poke.name
+            (item) => item.name === pokemon.name
         )
-
         const novaListaPokemons = [...pokemons];
         novaListaPokemons.splice(indice, 1);
-
         const ordenarPokemons = novaListaPokemons.sort((a, b) => {
             return a.id - b.id
         })
-
-        const novaListaPokedex = [...pokedex, props.poke];
+        const novaListaPokedex = [...pokedex, pokemon];
         const ordenarPokedex = novaListaPokedex.sort((a, b) => {
             return a.id - b.id
         });
@@ -53,8 +50,8 @@ const CartasPokemon = (props) => {
     }
 
     const excluirPokedex = ()  => {
-        const indice = pokedex.findIndex(
-            (item) => item.name === props.poke.name
+        const indice = pokedex.findIndex((item) => 
+        item.name === pokemon.name
         );
 
         const novaListaPokedex = [...pokedex];
@@ -63,7 +60,7 @@ const CartasPokemon = (props) => {
             return a.id - b.id;
         })
 
-        const novaListaPokemons = [...pokemons, props.poke];
+        const novaListaPokemons = [...pokemons, pokemon];
         const ordenarPokemons = novaListaPokemons.sort((a, b) => {
             return a.id - b.id;
         });
@@ -76,14 +73,14 @@ const CartasPokemon = (props) => {
         <CardContainer>
           <ImgPokemons>
           <Imagem 
-          src={props.poke && props.poke.sprites.front_default}
-          alt={props.poke.name} />
+          src={pokemon.sprites && pokemon.sprites.front_default}
+          alt={pokemon.name} />
           </ImgPokemons>
           <Buttons>
-           <button onClick={props.isPokedex ? excluirPokedex : adicionarPokedex}>
-               {props.isPokedex ? "Excluir da Pokedex" : "Adicionar a Pokedex"}
+           <button onClick={isPokedex ? excluirPokedex : adicionarPokedex}>
+               {isPokedex ? "Excluir da Pokedex" : "Adicionar a Pokedex"}
            </button>
-           <button onClick={() => detalhePokemon(history, props.poke.name, props.isPokedex)}> 
+           <button onClick={() => detalhePokemon(history, pokemon.name, isPokedex)}> 
                 Detalhes
            </button>
           </Buttons>

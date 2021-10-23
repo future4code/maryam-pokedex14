@@ -21,17 +21,17 @@ const ListaPokemon = () => {
     const {pokemons} = useContext(GlobalContext);
     const history = useHistory();
     return (
-       <div>
+       <>
             <Header title={"Lista de Pokémons"}
             leftButtonFunction={() => paraPokedex(history)}
             
             />
-          <PokeLista>
-            {pokemons && pokemons.map((poke)=> {
-                return <CartasPokemon hey={poke.name} poke={poke} />
+            <PokeLista>
+            {pokemons.map((poke)=> {
+                return <CartasPokemon hey={poke.name} pokemon={poke} />
             })}
-           </PokeLista>
-       </div>
+            </PokeLista>
+       </>
     )
 }
 export default ListaPokemon;
