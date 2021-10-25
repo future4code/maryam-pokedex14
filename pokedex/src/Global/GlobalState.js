@@ -59,3 +59,4 @@ const GlobalState = (props) => {
         </GlobalContext.Provider>
     )
 }
+export default GlobalState

@@ -3,6 +3,7 @@ import styled from "styled-components";
 import CartasPokemon from "../CartasPokemon/CartasPokemon";
 import GlobalContext from "../Global/GlobalContext";
 import { useHistory } from "react-router-dom";
+import GlobalState from "../Global/GlobalState";
 
 
 const Header = styled.header`
@@ -38,7 +39,7 @@ const PokeLista = styled.main`
 
 const ListaPokemon = () => {
 
-    const {pokemons} = useContext(GlobalContext);
+    const {pokemons} = useContext(GlobalState);
     const history = useHistory();
     return (
     <div>
